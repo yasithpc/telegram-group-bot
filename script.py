@@ -21,7 +21,7 @@ import datetime
 
 endTime = datetime.datetime.now() + datetime.timedelta(minutes=3)
 
-old_id = 1001364786772
+old_id = 202991054
 
 while endTime > datetime.datetime.now():
     time.sleep(1)
