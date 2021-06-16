@@ -1,40 +1,10 @@
-import requests
-import time
+import telebot
 
-token = '1830651233:AAH64rmPGjcgMGDblRYkc4AMadENLaA1o0w'
+bot = telebot.TeleBot("1607176195:AAE6t21ata7f-EMssrzD_ulRF-yikcvfa-I")
 
-######welcome message function#####
+@bot.message_handler(commands=['start', 'help'])
+def send_welcome(message):
+	bot.reply_to(message, "Hi soosai, how are you ?")
 
-def welcome_msg(item):
-    chat_id = item["message"]["chat"]["id"]
-    user_id = item["message"]["new_chat_member"]["id"]
-    user_name = item["message"]["new_chat_member"].get("username",user_id)
 
-    welcome_msg = '''
-                <a href="tg://user?id={}">@{}</a> , Welcome to this group. Please read rules of the group and adhere to
-                '''.format(user_id,user_name)
-    to_url = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}&parse_mode=HTML'.format(token,chat_id,welcome_resp = requests.get(to_url))
-
-##########################################
-
-import datetime
-
-endTime = datetime.datetime.now() + datetime.timedelta(minutes=3)
-
-old_id = 202990996
-
-while endTime > datetime.datetime.now():
-    time.sleep(1)
-    base_url = 'https://api.telegram.org/bot{}/getUpdates'.format(token)
-    resp = requests.get(base_url)
-    data = resp.json()
-    for item in data["result"]:
-        new_id = item["update_id"]
-        if old_id < new_id:
-            old_id = int(item["update_id"])
-            print(item)
-            try:
-                if "new_chat_member" in item["message"]:
-                    welcome_msg(item)
-            except:
-                pass
+bot.polling()
